@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 /*
 Route::get('/usuarios', function () {
     return view('welcome');
@@ -59,11 +57,21 @@ Route::get('/suma/{num1}/{num2}',function($num1,$num2){
 
 })->where(array('num1'=>'[0-9]+', 'num2'=>'[0-9]+'));
 //->where('num1','[0-9]+')->where('num2','[0-9]+');
-*/
 
 Route::get('/suma/{num1}/{num2}','WebController@suma')->where(array('num1'=>'[0-9]+', 'num2'=>'[0-9]+'));
 //1.- App\Http\Controllers\WebController@suma
 //2.- Se modifico la linea 29 en app/Providers//RouteServiceProvider.php (se descomentó y se le quitó los / sobrantes)
+*/
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/books', 'BookController@index');
+
+Route::get('/categories','CategoryController@index');
