@@ -74,8 +74,12 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['auth']],function(){
 
+	//BOOKS
 	Route::get('/books', 'BookController@index');
 
+	Route::post('/books', 'BookController@store');
+
+	//CATEGORIES
 	Route::get('/categories','CategoryController@index');
 
 	Route::post('/categories','CategoryController@store');
