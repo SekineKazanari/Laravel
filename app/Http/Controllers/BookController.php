@@ -39,24 +39,29 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        if ($book = Book::create($request->all())) {
 
-            if ($request->hasFile('cover')) {
+        if (Auth::user()->hasPermissionTo('add books')){
+            
+            if ($book = Book::create($request->all())) {
 
-                $file = $request->file('cover');
-                $file_name = 'book_cover'.$book->id.'.'.$file->getClientOriginalExtension();
+                if ($request->hasFile('cover')) {
 
-                $path = $request->file('cover')->storeAs(
-                    'img/books',$file_name
-                );
+                    $file = $request->file('cover');
+                    $file_name = 'book_cover'.$book->id.'.'.$file->getClientOriginalExtension();
 
-                $book->cover = $file_name;
-                $book->save();
+                    $path = $request->file('cover')->storeAs(
+                        'img/books',$file_name
+                    );
+
+                    $book->cover = $file_name;
+                    $book->save();
+                }
+
+               return redirect()->back();
             }
-
-           return redirect()->back();
         }
-         return redirect()->back();
+        
+         return redirect()->back()->with('error', 'No tienes permisos');
     }
 
     /**

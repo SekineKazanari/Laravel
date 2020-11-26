@@ -17,5 +17,7 @@ class DatabaseSeeder extends Seeder
     	$this->call(BookSeeder::class);
         $this->call(UserTableSeeder::class);
         // \App\Models\User::factory(10)->create();
+
+        $this->call(PermissionsTableSeeder::class);
     }
 }
